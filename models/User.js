@@ -16,7 +16,7 @@ module.exports = mongoose.model(
       required: true,
     },
     firstName: {
-      type: Date,
+      type: String,
       required: true,
     },
     lastName: {
@@ -38,7 +38,7 @@ module.exports = mongoose.model(
       type: String,
     },
     birthDate: {
-      type: String,
+      type: Date,
     },
     avatar: {
       type: String,
