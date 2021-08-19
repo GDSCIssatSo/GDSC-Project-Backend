@@ -7,6 +7,8 @@ module.exports = async function () {
     await mongoose.connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
     });
     console.log("db connection established");
   } catch (e) {

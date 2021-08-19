@@ -1,3 +1,3 @@
 module.exports = (app) => {
-  app.use(require("../routes/exemple.route"));
+  app.use(require("../routes/auth.route"));
 };
