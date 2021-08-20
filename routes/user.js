@@ -28,7 +28,6 @@ router.get("/", async (req, res)=> {
  
 router.get("/:id", async (req, res) => {
     try{
-
         const {error} = validateUserId(req.params);
         if (error)
             return res.status(400).send(failureResponse(error.details[0].message));
@@ -50,7 +49,6 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
     try{
         const {error} = validateUser(req.body);
-        console.log(error)
         if (error)
             return res.status(400).send(failureResponse(error.details[0].message));
 
@@ -106,7 +104,6 @@ router.delete("/:id", async  (req, res) => {
             return res.status(400).send(failureResponse(error.details[0].message));
 
         const user = await User.findByIdAndRemove(req.params.id);
-        
         if (!user)
             return res.status(404).send(failureResponse("User id not found - "+req.params.id)); 
         
