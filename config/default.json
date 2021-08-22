@@ -1,3 +1,9 @@
 {
-  "DB_URL": "mongodb://localhost:27017/dsc-project-db"
+  "DB_URL": "mongodb://localhost:27017/dsc-project-db",
+  "MAIL": {
+    "HOST": "smtp.gmail.com",
+    "USER": "at.zahreddine@gmail.com",
+    "PASS": "demscsvwzagesqbn",
+    "PORT": 465
+  }
 }
