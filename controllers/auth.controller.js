@@ -1,48 +1,25 @@
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { body, validationResult } = require("express-validator");
 const { customAlphabet } = require("nanoid");
 
 const Users = require("../models/User");
 const PasswordResetToken = require("../models/PasswordResetToken");
 
 const { sendEmail } = require("../services/emailService");
+const { requestValidation } = require("../utils/RequestValidation");
+const requestValidationMiddle = require("../middlewares/RequestValidationMiddleware");
 
 const nanoid = customAlphabet("1234567890abcdef", 30);
 
-const requestValidation = {
-  userid: body("userId")
-    .not()
-    .isEmpty()
-    .withMessage("userId is required")
-    .bail()
-    .custom((value) => mongoose.Types.ObjectId.isValid(value))
-    .withMessage("userId is not valid"),
-  token: body("token")
-    .not()
-    .isEmpty()
-    .withMessage("token is required")
-    .bail()
-    .isLength({ min: 30, max: 30 })
-    .withMessage("token length  must be 30 characters"),
-  password: body("password")
-    .isLength({ min: 8 })
-    .withMessage("password length must be at least 8 characters "),
-  email: body("email").isEmail().withMessage("email is invalid"),
-};
-
 const requestResetPassword = [
   requestValidation.email,
+  requestValidationMiddle,
   async (req, res) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json(errors);
-      }
-
       const user = await Users.findOne({ email: req.body.email });
       if (!user) {
-        return res.status(404).json({ error: { message: "User not found" } });
+        return res
+          .status(404)
+          .json({ status: "failure", error: { message: "User not found" } });
       }
 
       await PasswordResetToken.findOne({
@@ -81,12 +58,8 @@ const validateResetPasswordRequest = [
     requestValidation.token,
     requestValidation.password,
   ],
+  requestValidationMiddle,
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors);
-    }
-
     const user = await PasswordResetToken.findOne({
       userId: req.body.userId,
       token: req.body.token,
