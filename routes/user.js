@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
         ]))
  
         await user.save();
-        res.send(successResponse(user));   
+        res.status(201).send(successResponse(user));   
     }
     catch (ex){
         res.send(failureResponse( ex.message));  
@@ -89,7 +89,7 @@ router.put("/:id", async (req,res) =>{
         if (!user)
             return res.status(404).send(failureResponse("User id not found - "+req.params.id));  
 
-        res.send(successResponse(user));
+        res.status(201).send(successResponse(user));
     }
     catch(ex){
         res.send(failureResponse( ex.message));  
@@ -107,7 +107,7 @@ router.delete("/:id", async  (req, res) => {
         if (!user)
             return res.status(404).send(failureResponse("User id not found - "+req.params.id)); 
         
-        res.send(successResponse(user));   
+        res.status(204).send(successResponse(user));   
     }
     catch(ex){    
         res.send(failureResponse( ex.message)); 
