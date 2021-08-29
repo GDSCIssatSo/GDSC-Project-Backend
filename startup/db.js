@@ -8,6 +8,8 @@ module.exports = async function () {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
     });
     console.log("db connection established");
   } catch (e) {

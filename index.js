@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const user = require('./routes/user');
 
+app.use(express.json());
+
 require("./startup/index")(app);
 
 const port = process.env.PORT || 4000;
