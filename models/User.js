@@ -1,6 +1,9 @@
+const Joi = require("joi").extend(require('@joi/date'));
 const mongoose = require("mongoose");
+Joi.objectId = require('joi-objectid')(Joi);
 
-module.exports = mongoose.model(
+
+const User = mongoose.model(
   "User",
   new mongoose.Schema({
     username: {
@@ -45,3 +48,6 @@ module.exports = mongoose.model(
     },
   })
 );
+
+module.exports.User = User;
+
