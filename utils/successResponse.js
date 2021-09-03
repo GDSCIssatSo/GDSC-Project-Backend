@@ -1,9 +1,9 @@
 const _ = require('lodash');
 
-function successResponse(user){
+function successResponse(data){
     const response = new Object();
     response.status="Success";
-    response.data = _.omit(JSON.parse(JSON.stringify(user)), ["password"]);
+    response.data = data;
     return response;
   }
 
